@@ -9,21 +9,33 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useAddBookMutation } from "@/redux/api/base-api";
+import type { BookType } from "@/types/bookTypes";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 
+type FormBook = Omit<BookType, "_id" | "available">;
+
 export default function CreateBook() {
-  const [formData] = useState({
-    title: "",
-    author: "",
-    genre: "",
-    isbn: "",
-    description: "",
-    copies: 1,
-  });
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormBook>();
+
+  const [addBook] = useAddBookMutation();
+
+  const onSubmit = async (data: FormBook) => {
+    try {
+      await addBook(data).unwrap();
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
@@ -35,29 +47,30 @@ export default function CreateBook() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="title">Title *</Label>
                   <Input
                     id="title"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleChange}
+                    {...register("title", { required: true })}
                     placeholder="Enter book title"
-                    required
                   />
+                  {errors.title && (
+                    <p className="text-red-500 text-sm">Title is required</p>
+                  )}
                 </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="author">Author *</Label>
                   <Input
                     id="author"
-                    name="author"
-                    value={formData.author}
-                    onChange={handleChange}
+                    {...register("author", { required: true })}
                     placeholder="Enter author name"
-                    required
                   />
+                  {errors.author && (
+                    <p className="text-red-500 text-sm">Author is required</p>
+                  )}
                 </div>
               </div>
 
@@ -66,22 +79,21 @@ export default function CreateBook() {
                   <Label htmlFor="genre">Genre</Label>
                   <Input
                     id="genre"
-                    name="genre"
-                    value={formData.genre}
-                    onChange={handleChange}
+                    {...register("genre")}
                     placeholder="Enter genre"
                   />
                 </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="isbn">ISBN *</Label>
                   <Input
                     id="isbn"
-                    name="isbn"
-                    value={formData.isbn}
-                    onChange={handleChange}
+                    {...register("isbn", { required: true })}
                     placeholder="Enter ISBN"
-                    required
                   />
+                  {errors.isbn && (
+                    <p className="text-red-500 text-sm">ISBN is required</p>
+                  )}
                 </div>
               </div>
 
@@ -89,11 +101,9 @@ export default function CreateBook() {
                 <Label htmlFor="copies">Number of Copies</Label>
                 <Input
                   id="copies"
-                  name="copies"
                   type="number"
                   min="1"
-                  value={formData.copies}
-                  onChange={handleChange}
+                  {...register("copies", { valueAsNumber: true })}
                   placeholder="Enter number of copies"
                 />
               </div>
@@ -102,9 +112,7 @@ export default function CreateBook() {
                 <Label htmlFor="description">Description</Label>
                 <Textarea
                   id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
+                  {...register("description")}
                   placeholder="Enter book description"
                   rows={4}
                 />

@@ -68,7 +68,7 @@ export function HeroSlider() {
   };
 
   return (
-    <div className="relative w-full h-[600px] overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 shadow-2xl">
+    <div className="relative container mx-auto h-[600px] overflow-hidden rounded-2xl bg-gradient-to-br my-8 from-slate-900 via-blue-900 to-slate-800 shadow-2xl">
       {slides.map((slide, index) => (
         <div
           key={slide.id}
