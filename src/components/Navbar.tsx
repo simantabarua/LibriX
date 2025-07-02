@@ -17,7 +17,6 @@ export default function Navbar() {
           <span className="text-xl font-bold">LibriX</span>
         </NavLink>
 
-        {/* Navigation Menu */}
         <NavigationMenu className=" md:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -29,8 +28,7 @@ export default function Navbar() {
                     pathname === "/books" && "bg-accent text-accent-foreground"
                   )}
                 >
-                  {/* <BookOpen className="mr-2 h-4 w-4" /> */}
-                  Books
+                  All Books
                 </NavLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -44,7 +42,21 @@ export default function Navbar() {
                     pathname === "/borrow" && "bg-accent text-accent-foreground"
                   )}
                 >
-                  Borrow
+                  Borrow Summary
+                </NavLink>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <NavLink
+                  to="/create-book"
+                  className={cn(
+                    "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                    pathname === "/borrow" && "bg-accent text-accent-foreground"
+                  )}
+                >
+                  Add book
                 </NavLink>
               </NavigationMenuLink>
             </NavigationMenuItem>

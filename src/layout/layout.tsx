@@ -6,7 +6,7 @@ export default function layout() {
   return (
     <>
       <Navbar />
-      <main className="flex h-full min-h-[80vh] flex-col items-center ">
+      <main className="h-full min-h-[80vh] ">
         <Outlet />
       </main>
       <Footer />
