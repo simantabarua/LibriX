@@ -38,7 +38,6 @@ export const bookApi = baseApi.injectEndpoints({
       invalidatesTags: ["Books"],
     }),
   }),
-  overrideExisting: false,
 });
 
 export const {

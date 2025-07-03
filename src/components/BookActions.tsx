@@ -12,11 +12,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import { useDeleteBookMutation } from "@/redux/api/base-api";
+import { useDeleteBookMutation } from "@/redux/api/book-api";
 
 interface Props {
   id: string;
-  available: number;
+  available: boolean;
 }
 
 export default function BookActions({ id, available }: Props) {
@@ -35,12 +35,20 @@ export default function BookActions({ id, available }: Props) {
   return (
     <div className="flex items-center gap-1">
       <Link to={`/books/${id}`}>
-        <Button variant="ghost" size="sm" className="hover:bg-blue-50 hover:text-blue-700">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="hover:bg-blue-50 hover:text-blue-700"
+        >
           <Eye className="h-4 w-4" />
         </Button>
       </Link>
       <Link to={`/edit-book/${id}`}>
-        <Button variant="ghost" size="sm" className="hover:bg-blue-50 hover:text-blue-700">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="hover:bg-blue-50 hover:text-blue-700"
+        >
           <Edit className="h-4 w-4" />
         </Button>
       </Link>
@@ -48,7 +56,7 @@ export default function BookActions({ id, available }: Props) {
         <Button
           variant="ghost"
           size="sm"
-          disabled={available === 0}
+          disabled={available === false}
           className="hover:bg-green-50 hover:text-green-700 disabled:opacity-50"
         >
           <BookOpen className="h-4 w-4" />
@@ -57,14 +65,20 @@ export default function BookActions({ id, available }: Props) {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="ghost" size="sm" className="hover:bg-blue-50 hover:text-blue-700">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="hover:bg-blue-50 hover:text-blue-700"
+          >
             <Trash className="h-4 w-4" />
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Delete Book</DialogTitle>
-            <DialogDescription>This action cannot be undone. Are you sure?</DialogDescription>
+            <DialogDescription>
+              This action cannot be undone. Are you sure?
+            </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <DialogClose asChild>

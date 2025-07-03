@@ -18,6 +18,7 @@ import { Plus, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link, useParams, useNavigate } from "react-router";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 type FormBook = Omit<BookType, "_id" | "available">;
 
@@ -52,10 +53,14 @@ export default function EditBook() {
 
   const onSubmit = async (formData: FormBook) => {
     try {
-      updateBook({ id: bookId, book: formData }).unwrap();
+      await updateBook({ id: bookId, book: formData }).unwrap();
+      toast.success("Book updated successfully!", {
+        description: `${formData.title} has been updated.`,
+      });
       navigate("/");
     } catch (error) {
       console.error("Failed to update book:", error);
+      toast.error("Failed to update book");
     }
   };
 

@@ -6,5 +6,5 @@ export interface BookType {
   isbn: string;
   description: string;
   copies: number;
-  available: number;
+  available: boolean;
 }

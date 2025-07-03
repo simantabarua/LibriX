@@ -137,16 +137,14 @@ export default function Books() {
                         <TableCell>{book.copies}</TableCell>
                         <TableCell>
                           <Badge
-                            variant={
-                              book.available > 0 ? "default" : "secondary"
-                            }
+                            variant={book.available ? "default" : "secondary"}
                             className={
-                              book.available > 0
+                              book.available
                                 ? "bg-emerald-100 text-emerald-700 border-emerald-300"
                                 : "bg-slate-100 text-slate-600 border-slate-300"
                             }
                           >
-                            {book.available > 0 ? "Available" : "Unavailable"}
+                            {book.available ? "Available" : "Unavailable"}
                           </Badge>
                         </TableCell>
                         <TableCell>
@@ -173,14 +171,14 @@ export default function Books() {
                     <CardHeader className="pb-3">
                       <div className="flex justify-between items-start mb-2">
                         <Badge
-                          variant={book.available > 0 ? "default" : "secondary"}
+                          variant={book.available ? "default" : "secondary"}
                           className={
-                            book.available > 0
+                            book.available
                               ? "bg-emerald-100 text-emerald-700 border-emerald-300"
                               : "bg-slate-100 text-slate-600 border-slate-300"
                           }
                         >
-                          {book.available > 0 ? "Available" : "Unavailable"}
+                          {book.available ? "Available" : "Unavailable"}
                         </Badge>
                         <div className="text-right">
                           <div className="text-sm font-semibold text-slate-700">

@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BookOpen, Calendar } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -17,56 +17,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-export default function Borrow() {
-  const totalBorrowed = 10;
-  const borrowSummary = [];
+import { useGetBorrowSummaryQuery } from "@/redux/api/borrow-api";
+import type { BorrowSummary } from "@/types/borrowTypes";
+export default function BorrowSummary() {
+  const { data } = useGetBorrowSummaryQuery(undefined);
+  const borrowSummary = data?.data || [];
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Total Books Borrowed
-              </CardTitle>
-              <BookOpen className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{totalBorrowed}</div>
-              <p className="text-xs text-muted-foreground">
-                Copies currently on loan
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Unique Titles
-              </CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{borrowSummary.length}</div>
-              <p className="text-xs text-muted-foreground">
-                Different books borrowed
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Status</CardTitle>
-              <Badge variant="default" className="h-4 w-4 rounded-full p-0" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">Active</div>
-              <p className="text-xs text-muted-foreground">
-                Borrowing system operational
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Borrow Summary Table */}
         <Card>
           <CardHeader>
             <CardTitle>Borrowed Books Summary</CardTitle>
@@ -82,28 +40,23 @@ export default function Borrow() {
                     <TableRow>
                       <TableHead>Book Title</TableHead>
                       <TableHead>Author</TableHead>
-                      <TableHead>Genre</TableHead>
                       <TableHead>ISBN</TableHead>
                       <TableHead>Total Quantity Borrowed</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {borrowSummary.map((item, index) => (
-                      <TableRow key={index}>
+                    {borrowSummary.map((item: BorrowSummary) => (
+                      <TableRow key={item.book.isbn}>
                         <TableCell className="font-medium">
-                          {item.bookTitle}
+                          {item.book.title}
                         </TableCell>
-                        <TableCell>{item.author}</TableCell>
-                        <TableCell>{item.genre}</TableCell>
+                        <TableCell>{item.book.isbn}</TableCell>
                         <TableCell className="font-mono text-sm">
-                          {item.isbn}
+                          {item.book.isbn}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="text-center">
                           <Badge variant="secondary">
-                            {item.totalQuantityBorrowed}{" "}
-                            {item.totalQuantityBorrowed === 1
-                              ? "copy"
-                              : "copies"}
+                            {item.totalQuantity}
                           </Badge>
                         </TableCell>
                       </TableRow>
