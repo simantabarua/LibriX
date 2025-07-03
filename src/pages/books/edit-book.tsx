@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   useGetBookByIdQuery,
   useUpdateBookMutation,
-} from "@/redux/api/base-api";
+} from "@/redux/api/book-api";
 import type { BookType } from "@/types/bookTypes";
 import { Plus, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";

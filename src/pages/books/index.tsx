@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import type { BookType } from "@/types/bookTypes";
-import { useGetBookQuery } from "@/redux/api/base-api";
+import { useGetBookQuery } from "@/redux/api/book-api";
 
 import BookActions from "../../components/BookActions";
 

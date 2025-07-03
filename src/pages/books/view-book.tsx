@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useParams } from "react-router";
-import { useGetBookByIdQuery } from "@/redux/api/base-api";
+import { useGetBookByIdQuery } from "@/redux/api/book-api";
 
 export default function ViewBook() {
   const { id } = useParams<{ id: string }>();
