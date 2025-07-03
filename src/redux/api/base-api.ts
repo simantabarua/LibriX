@@ -10,17 +10,45 @@ export const baseApi = createApi({
   endpoints: (builder) => ({
     getBook: builder.query({
       query: () => "/books",
-      providesTags: ["Books"], 
+      providesTags: ["Books"],
     }),
     addBook: builder.mutation<BookType, Omit<BookType, "_id" | "available">>({
       query: (book) => ({
-        url: "/books", 
+        url: "/books",
         method: "POST",
         body: book,
+      }),
+      invalidatesTags: ["Books"],
+    }),
+    getBookById: builder.query({
+      query: (id) => `/books/${id}`,
+      providesTags: ["Books"],
+    }),
+    updateBook: builder.mutation<
+      BookType,
+      { id: string; book: Omit<BookType, "_id" | "available"> }
+    >({
+      query: ({ id, book }) => ({
+        url: `books/${id}`,
+        method: "PUT",
+        body: book,
+      }),
+      invalidatesTags: ["Books"],
+    }),
+    deleteBook: builder.mutation({
+      query: (id) => ({
+        url: `books/${id}`,
+        method: "DELETE",
       }),
       invalidatesTags: ["Books"],
     }),
   }),
 });
 
-export const { useGetBookQuery, useAddBookMutation } = baseApi;
+export const {
+  useGetBookQuery,
+  useUpdateBookMutation,
+  useAddBookMutation,
+  useGetBookByIdQuery,
+  useDeleteBookMutation,
+} = baseApi;

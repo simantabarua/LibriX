@@ -1,5 +1,4 @@
-import { BookOpen, Edit, Grid3X3, List } from "lucide-react";
-import { Link } from "react-router";
+import { BookOpen, Grid3X3, List } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -12,6 +11,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -20,6 +20,8 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import type { BookType } from "@/types/bookTypes";
 import { useGetBookQuery } from "@/redux/api/base-api";
+
+import BookActions from "../../components/BookActions";
 
 export default function Books() {
   const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
@@ -149,34 +151,10 @@ export default function Books() {
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-1">
-                            <Link to={`/books/${book._id}`}>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="hover:bg-blue-50 hover:text-blue-700"
-                              >
-                                <BookOpen className="h-4 w-4" />
-                              </Button>
-                            </Link>
-                            <Link to={`/edit-book/${book._id}`}>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="hover:bg-blue-50 hover:text-blue-700"
-                              >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                            </Link>
-                            <Link to={`/borrow/${book._id}`}>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                disabled={book.available === 0}
-                                className="hover:bg-green-50 hover:text-green-700 disabled:opacity-50"
-                              >
-                                <BookOpen className="h-4 w-4" />
-                              </Button>
-                            </Link>
+                            <BookActions
+                              id={book._id}
+                              available={book.available}
+                            />
                           </div>
                         </TableCell>
                       </TableRow>
@@ -244,6 +222,11 @@ export default function Books() {
                         )}
                       </div>
                     </CardContent>
+                    <CardFooter>
+                      <div className="flex items-center mx-auto gap-1">
+                        <BookActions id={book._id} available={book.available} />
+                      </div>
+                    </CardFooter>
                   </Card>
                 ))}
               </div>
