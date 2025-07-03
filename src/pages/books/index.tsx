@@ -1,4 +1,4 @@
-import { BookOpen, Grid3X3, List } from "lucide-react";
+import { BookOpen, Grid3X3, List, Loader2 } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -7,14 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
@@ -22,6 +15,7 @@ import type { BookType } from "@/types/bookTypes";
 import { useGetBookQuery } from "@/redux/api/book-api";
 
 import BookActions from "../../components/BookActions";
+import { BookCard } from "@/components/BookCard";
 
 export default function Books() {
   const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
@@ -89,8 +83,11 @@ export default function Books() {
 
           <CardContent className="px-6">
             {isLoading ? (
-              <div className="w-full text-center py-10 text-blue-600 font-medium">
-                Loading books...
+              <div className="min-h-screen flex items-center justify-center bg-background">
+                <Loader2 className="animate-spin h-8 w-8 text-muted-foreground" />
+                <span className="ml-2 text-muted-foreground">
+                  Loading book data...
+                </span>
               </div>
             ) : isError ? (
               <div className="w-full text-center py-10 text-red-600 font-medium">
@@ -161,71 +158,9 @@ export default function Books() {
                 </Table>
               </div>
             ) : (
-              // Grid View
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {bookData.map((book: BookType) => (
-                  <Card
-                    key={book._id}
-                    className="group hover:shadow-xl transition-all duration-300 border border-slate-200 hover:border-blue-300 bg-white"
-                  >
-                    <CardHeader className="pb-3">
-                      <div className="flex justify-between items-start mb-2">
-                        <Badge
-                          variant={book.available ? "default" : "secondary"}
-                          className={
-                            book.available
-                              ? "bg-emerald-100 text-emerald-700 border-emerald-300"
-                              : "bg-slate-100 text-slate-600 border-slate-300"
-                          }
-                        >
-                          {book.available ? "Available" : "Unavailable"}
-                        </Badge>
-                        <div className="text-right">
-                          <div className="text-sm font-semibold text-slate-700">
-                            {book.copies}
-                          </div>
-                          <div className="text-xs text-slate-500">copies</div>
-                        </div>
-                      </div>
-                      <CardTitle className="text-lg font-bold text-slate-900 line-clamp-2 group-hover:text-blue-700 transition-colors">
-                        {book.title}
-                      </CardTitle>
-                      <CardDescription className="text-slate-600 font-medium">
-                        by {book.author}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-slate-500">Genre:</span>
-                          <Badge
-                            variant="outline"
-                            className="bg-slate-50 text-slate-700 border-slate-300 text-xs"
-                          >
-                            {book.genre}
-                          </Badge>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-slate-500">ISBN:</span>
-                          <span className="font-mono text-xs text-slate-600">
-                            {book.isbn}
-                          </span>
-                        </div>
-                        {book.description && (
-                          <div className="pt-2">
-                            <p className="text-sm text-slate-600 line-clamp-3">
-                              {book.description}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <div className="flex items-center mx-auto gap-1">
-                        <BookActions id={book._id} available={book.available} />
-                      </div>
-                    </CardFooter>
-                  </Card>
+                  <BookCard key={book._id} book={book} />
                 ))}
               </div>
             )}

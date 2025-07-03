@@ -5,7 +5,7 @@ export default function layout() {
   return (
     <>
       <Navbar />
-      <main className="h-full min-h-[80vh] ">
+      <main>
         <Outlet />
       </main>
       <Footer />
