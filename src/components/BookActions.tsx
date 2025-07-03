@@ -33,7 +33,7 @@ export default function BookActions({ id, available }: Props) {
   };
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center flex-wrap gap-1">
       <Link to={`/books/${id}`}>
         <Button
           variant="ghost"

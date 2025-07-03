@@ -8,3 +8,19 @@ export interface BookType {
   copies: number;
   available: boolean;
 }
+export interface GetBooksParams {
+  filter?: string;
+  sortBy?: string;
+  sort?: "asc" | "desc";
+  limit?: number;
+  page?: number;
+}
+export interface BooksResponse {
+  data: BookType[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}

@@ -5,6 +5,6 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://library-management-api-node.vercel.app/api",
   }),
-  tagTypes: ["Books"],
-  endpoints: () => ({}), 
+  tagTypes: ["Books", "Genres"],
+  endpoints: () => ({}),
 });

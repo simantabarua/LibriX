@@ -15,11 +15,12 @@ import {
 } from "@/redux/api/book-api";
 import type { BookType } from "@/types/bookTypes";
 import { Plus, Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Link, useParams, useNavigate } from "react-router";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import PageHeader from "@/components/PageHeader";
+import GenreSelect from "@/components/GenreSelect";
 
 type FormBook = Omit<BookType, "_id" | "available">;
 
@@ -35,6 +36,7 @@ export default function EditBook() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<FormBook>();
   const bookData = data?.data;
@@ -120,10 +122,15 @@ export default function EditBook() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="genre">Genre</Label>
-                <Input
-                  id="genre"
-                  {...register("genre")}
-                  placeholder="Enter genre"
+                <Controller
+                  name="genre"
+                  control={control}
+                  render={({ field }) => (
+                    <GenreSelect
+                      value={field.value || ""}
+                      onChange={field.onChange}
+                    />
+                  )}
                 />
               </div>
 

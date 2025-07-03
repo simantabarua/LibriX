@@ -1,69 +1,81 @@
-# React + TypeScript + Vite
+# LibaraQuantum Library Management System 📚
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Demo:** [https://libraquantum.web.app/](https://libraquantum.web.app/)
 
-Currently, two official plugins are available:
+LibaraQuantum is a clean, minimal, and fully functional Library Management System built using **React**, **Redux Toolkit Query (RTK Query)**, **TypeScript**, **Node.js**, **Express.js**, and **MongoDB**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Designed to simplify library operations with intuitive book and borrowing management features, wrapped in a responsive UI.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Features
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 📘 Book Management
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- List all books in table or grid views
+- Add, edit, and delete books
+- Pagination support
+- Confirmation modals for destructive actions
+- Real-time availability tracking
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 📚 Borrowing System
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Borrow books with quantity and due date validation
+- Prevent over-borrowing based on available stock
+- View aggregated borrow summary by title and quantity
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 💻 UI & UX
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Fully responsive layout for mobile, tablet, and desktop
+- Minimalist design using Tailwind CSS
+- User feedback with toast notifications
+- Type-safe, validated forms using React Hook Form
+
+---
+
+## 🧱 Tech Stack
+
+| Layer      | Technology                |
+| ---------- | ------------------------- |
+| Frontend   | React + TypeScript        |
+| State Mgmt | Redux Toolkit + RTK Query |
+| Backend    | Node.js + Express.js      |
+| Database   | MongoDB + Mongoose        |
+| Hosting    | Firebase                  |
+| Styling    | Tailwind CSS              |
+
+---
+
+## 🖥️ Frontend Setup
+
+## Clone the repository
+
+git clone https://github.com/simantabarua/LibriX.git
+cd libraquantum/client
+
+## Install dependencies
+
+npm install
+
+## Start the development server
+
+npm run dev
+
+## Create .env file in the client folder
+
+## Example:
+
+echo "VITE_API_BASE_URL=http://localhost:5000" > .env
+
+## Running the Project
+
+Make sure both frontend and backend servers are running:
+
+Frontend: http://localhost:5173 (Vite default)
+Backend API: http://localhost:5000
+
+#
+
+# License
+
+This project is open-source and available under the MIT License.

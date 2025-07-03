@@ -1,3 +1,4 @@
+import GenreSelect from "@/components/GenreSelect";
 import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAddBookMutation } from "@/redux/api/book-api";
 import type { BookType } from "@/types/bookTypes";
 import { Loader2, Plus } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 
@@ -24,6 +25,7 @@ export default function CreateBook() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<FormBook>();
   const navigate = useNavigate();
@@ -85,10 +87,15 @@ export default function CreateBook() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="genre">Genre</Label>
-                <Input
-                  id="genre"
-                  {...register("genre")}
-                  placeholder="Enter genre"
+                <Controller
+                  name="genre"
+                  control={control}
+                  render={({ field }) => (
+                    <GenreSelect
+                      value={field.value || ""}
+                      onChange={field.onChange}
+                    />
+                  )}
                 />
               </div>
 

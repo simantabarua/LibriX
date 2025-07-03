@@ -12,28 +12,33 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import type { BookType } from "@/types/bookTypes";
-import { useGetBookQuery } from "@/redux/api/book-api";
+import { useGetBooksQuery } from "@/redux/api/book-api";
 
 import BookActions from "../../components/BookActions";
 import { BookCard } from "@/components/BookCard";
+import { cn } from "@/lib/utils";
+import BookPagination from "@/components/Pagination";
 
 export default function Books() {
   const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
-  const { data, isLoading, isError } = useGetBookQuery(undefined);
-
+  const [page, setPage] = useState(1);
+  const limit = 8;
+  const { data, isLoading, isError } = useGetBooksQuery({ page, limit });
   const bookData = data?.data || [];
 
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-6 py-8 ">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+          <div className="flex items-start sm:items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
               <BookOpen className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">All Books</h1>
-              <p className="text-slate-600">
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
+                All Books
+              </h1>
+              <p className="text-sm sm:text-base text-slate-600">
                 Browse and manage your complete collection
               </p>
             </div>
@@ -42,23 +47,24 @@ export default function Books() {
 
         <Card className="shadow-xl border-0 backdrop-blur-sm mb-8">
           <CardHeader>
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
               <div>
                 <CardTitle className="text-xl font-bold text-slate-900">
                   Book Collection
                 </CardTitle>
               </div>
-              <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-                <div className="flex bg-slate-100 rounded-lg p-1">
+              <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-3">
+                <div className="flex bg-slate-100 rounded-lg p-1 justify-center sm:justify-start">
                   <Button
                     variant={viewMode === "list" ? "default" : "ghost"}
                     size="sm"
                     onClick={() => setViewMode("list")}
-                    className={`px-3 ${
+                    className={cn(
+                      "px-3",
                       viewMode === "list"
                         ? "bg-gray-100 shadow-sm text-gray-600"
                         : "hover:bg-slate-200"
-                    }`}
+                    )}
                   >
                     <List className="h-4 w-4 mr-1" />
                     List
@@ -67,11 +73,12 @@ export default function Books() {
                     variant={viewMode === "grid" ? "default" : "ghost"}
                     size="sm"
                     onClick={() => setViewMode("grid")}
-                    className={`px-3 ${
+                    className={cn(
+                      "px-3",
                       viewMode === "grid"
                         ? "bg-gray-100 shadow-sm text-gray-600"
                         : "hover:bg-slate-200"
-                    }`}
+                    )}
                   >
                     <Grid3X3 className="h-4 w-4 mr-1" />
                     Grid
@@ -166,6 +173,11 @@ export default function Books() {
             )}
           </CardContent>
         </Card>
+        <BookPagination
+          currentPage={page}
+          totalPages={data?.meta?.totalPages || 1}
+          onPageChange={setPage}
+        />
       </div>
     </div>
   );
