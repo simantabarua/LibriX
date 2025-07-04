@@ -6,12 +6,15 @@ import EditBook from "@/pages/books/edit-book";
 import ViewBook from "@/pages/books/view-book";
 import BorrowSummary from "@/pages/borrow";
 import Borrow from "@/pages/borrow/borrow";
+import ErrorPage from "@/pages/ErrorPage";
+import NotFoundPage from "@/pages/NotFound";
 import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: layout,
+    errorElement: <ErrorPage />, 
     children: [
       {
         index: true,
@@ -40,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/borrow/:id",
         Component: Borrow,
+      },
+      {
+        path: "*", 
+        Component: NotFoundPage,
       },
     ],
   },

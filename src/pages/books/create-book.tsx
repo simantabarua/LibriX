@@ -30,7 +30,7 @@ export default function CreateBook() {
   } = useForm<FormBook>();
   const navigate = useNavigate();
 
-  const [addBook, { isLoading: isAdding }] = useAddBookMutation();
+  const [addBook, { isLoading: isAdding, error }] = useAddBookMutation();
   const onSubmit = async (data: FormBook) => {
     try {
       await addBook(data).unwrap();
@@ -90,6 +90,12 @@ export default function CreateBook() {
                 <Controller
                   name="genre"
                   control={control}
+                  rules={{
+                    validate: (value) =>
+                      value && value !== "All"
+                        ? true
+                        : "Please select a valid genre",
+                  }}
                   render={({ field }) => (
                     <GenreSelect
                       value={field.value || ""}
@@ -97,6 +103,9 @@ export default function CreateBook() {
                     />
                   )}
                 />
+                {errors.genre && (
+                  <p className="text-red-500 text-sm">{errors.genre.message}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -108,6 +117,11 @@ export default function CreateBook() {
                 />
                 {errors.isbn && (
                   <p className="text-red-500 text-sm">ISBN is required</p>
+                )}
+
+                {error && "data" in error && (
+                  // @ts-expect-error ignore
+                  <p className="text-red-500 text-sm">{error.data?.message}</p>
                 )}
               </div>
             </div>

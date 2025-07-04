@@ -11,6 +11,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 import { useState } from "react";
 import { useDeleteBookMutation } from "@/redux/api/book-api";
 
@@ -34,45 +39,68 @@ export default function BookActions({ id, available }: Props) {
 
   return (
     <div className="flex items-center flex-wrap gap-1">
-      <Link to={`/books/${id}`}>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="hover:bg-blue-50 hover:text-blue-700"
-        >
-          <Eye className="h-4 w-4" />
-        </Button>
-      </Link>
-      <Link to={`/edit-book/${id}`}>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="hover:bg-blue-50 hover:text-blue-700"
-        >
-          <Edit className="h-4 w-4" />
-        </Button>
-      </Link>
-      <Link to={`/borrow/${id}`}>
-        <Button
-          variant="ghost"
-          size="sm"
-          disabled={available === false}
-          className="hover:bg-green-50 hover:text-green-700 disabled:opacity-50"
-        >
-          <BookOpen className="h-4 w-4" />
-        </Button>
-      </Link>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Link to={`/books/${id}`}>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="hover:bg-blue-50 hover:text-blue-700"
+            >
+              <Eye className="h-4 w-4" />
+            </Button>
+          </Link>
+        </TooltipTrigger>
+        <TooltipContent>View Book</TooltipContent>
+      </Tooltip>
+
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Link to={`/edit-book/${id}`}>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="hover:bg-blue-50 hover:text-blue-700"
+            >
+              <Edit className="h-4 w-4" />
+            </Button>
+          </Link>
+        </TooltipTrigger>
+        <TooltipContent>Edit Book</TooltipContent>
+      </Tooltip>
+
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Link to={`/borrow/${id}`}>
+            <Button
+              variant="ghost"
+              size="sm"
+              disabled={!available}
+              className="hover:bg-green-50 hover:text-green-700 disabled:opacity-50"
+            >
+              <BookOpen className="h-4 w-4" />
+            </Button>
+          </Link>
+        </TooltipTrigger>
+        <TooltipContent>{available ? "Borrow Book" : "Not Available to Borrow"}</TooltipContent>
+      </Tooltip>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="hover:bg-blue-50 hover:text-blue-700"
-          >
-            <Trash className="h-4 w-4" />
-          </Button>
-        </DialogTrigger>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DialogTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="hover:bg-blue-50 hover:text-blue-700"
+              >
+                <Trash className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent>Delete Book</TooltipContent>
+        </Tooltip>
+
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Delete Book</DialogTitle>

@@ -30,7 +30,8 @@ export default function EditBook() {
   const navigate = useNavigate();
 
   const { data, isLoading, isError } = useGetBookByIdQuery(bookId);
-  const [updateBook, { isLoading: isUpdating }] = useUpdateBookMutation();
+  const [updateBook, { isLoading: isUpdating, error }] =
+    useUpdateBookMutation();
 
   const {
     register,
@@ -125,6 +126,12 @@ export default function EditBook() {
                 <Controller
                   name="genre"
                   control={control}
+                  rules={{
+                    validate: (value) =>
+                      value && value !== "All"
+                        ? true
+                        : "Please select a valid genre",
+                  }}
                   render={({ field }) => (
                     <GenreSelect
                       value={field.value || ""}
@@ -132,17 +139,26 @@ export default function EditBook() {
                     />
                   )}
                 />
+                {errors.genre && (
+                  <p className="text-red-500 text-sm">{errors.genre.message}</p>
+                )}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="isbn">ISBN *</Label>
                 <Input
                   id="isbn"
-                  {...register("isbn", { required: "ISBN is required" })}
+                  {...register("isbn", { required: true })}
                   placeholder="Enter ISBN"
                 />
+
                 {errors.isbn && (
-                  <p className="text-red-500 text-sm">{errors.isbn.message}</p>
+                  <p className="text-red-500 text-sm">ISBN is required</p>
+                )}
+
+                {error && "data" in error && (
+                  // @ts-expect-error ignore
+                  <p className="text-red-500 text-sm">{error.data?.message}</p>
                 )}
               </div>
             </div>

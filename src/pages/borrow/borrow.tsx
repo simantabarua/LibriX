@@ -137,16 +137,19 @@ export default function Borrow() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="quantity">Quantity</Label>
                   <Input
                     id="quantity"
                     type="number"
                     {...register("quantity", {
-                      required: true,
-                      min: 1,
-                      max: book.copies,
+                      required: "Quantity is required",
+                      min: { value: 1, message: "Minimum quantity is 1" },
+                      max: {
+                        value: book.copies,
+                        message: `Maximum quantity is ${book.copies}`,
+                      },
                       valueAsNumber: true,
                     })}
                     placeholder="Enter quantity"
@@ -154,7 +157,7 @@ export default function Borrow() {
                   />
                   {errors.quantity && (
                     <p className="text-sm text-red-600">
-                      Valid quantity required (1 - {book.available})
+                      {errors.quantity.message}
                     </p>
                   )}
                   <p className="text-sm text-muted-foreground">
