@@ -50,8 +50,8 @@ Designed to simplify library operations with intuitive book and borrowing manage
 
 ## Clone the repository
 
-git clone https://github.com/simantabarua/LibriX.git
-cd libraquantum/client
+git clone https://github.com/simantabarua/libraquantum.git
+cd libraquantum
 
 ## Install dependencies
 
